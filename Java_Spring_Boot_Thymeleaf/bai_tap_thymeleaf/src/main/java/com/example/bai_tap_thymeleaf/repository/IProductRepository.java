@@ -1,6 +1,6 @@
 package com.example.bai_tap_thymeleaf.repository;
 
-import com.example.bai_tap_thymeleaf.enity.Product;
+import com.example.bai_tap_thymeleaf.entity.Product;
 
 import java.util.List;
 
