@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Chỉnh sửa danh mục</title>
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body class="container mt-4">
+
+<h2>📝 Chỉnh sửa danh mục</h2>
+
+<form th:action="@{/categories/edit}" th:object="${category}" method="post" class="mt-3">
+    <input type="hidden" th:field="*{id}"/>
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Tên danh mục</label>
+        <input type="text" id="name" th:field="*{name}" class="form-control"
+               placeholder="Nhập tên danh mục..." required>
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-success">💾 Lưu thay đổi</button>
+        <a th:href="@{/categories}" class="btn btn-secondary">⬅ Quay lại</a>
+    </div>
+</form>
+</body>
+</html>

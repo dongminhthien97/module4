@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Danh sách Blog</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body class="container mt-4">
+
+<h2>Danh sách bài viết</h2>
+<a class="btn btn-primary mb-3" th:href="@{/blogs/create}">+ Tạo bài viết mới</a>
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>Tiêu đề</th>
+    <th>Tác giả</th>
+    <th>Danh mục</th>
+    <th>Hành động</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="blog : ${blogs.content}">
+    <td th:text="${blog.title}"></td>
+    <td th:text="${blog.author}"></td>
+    <td th:text="${blog.category.name}"></td>
+    <td>
+      <a th:href="@{/blogs/detail/{id}(id=${blog.id})}" class="btn btn-info btn-sm">Xem</a>
+      <a th:href="@{/blogs/edit/{id}(id=${blog.id})}" class="btn btn-warning btn-sm">Sửa</a>
+      <a th:href="@{/blogs/delete/{id}(id=${blog.id})}" class="btn btn-danger btn-sm">Xóa</a>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- PHÂN TRANG -->
+<div class="mt-3">
+  <a th:if="${currentPage > 0}"
+     th:href="@{/blogs(page=${currentPage - 1})}"
+     class="btn btn-outline-primary">← Trang trước</a>
+
+  <span>Trang [[${currentPage + 1}]] / [[${totalPages}]]</span>
+
+  <a th:if="${currentPage + 1 < totalPages}"
+     th:href="@{/blogs(page=${currentPage + 1})}"
+     class="btn btn-outline-primary">Trang sau →</a>
+</div>
+
+</body>
+</html>
+

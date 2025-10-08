@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Chi tiết Danh mục</title>
+  <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body class="container mt-4">
+
+<h2>Chi tiết Danh mục</h2>
+
+<div class="card p-3 mb-3">
+  <p><strong>ID:</strong> <span th:text="${category.id}"></span></p>
+  <p><strong>Tên danh mục:</strong> <span th:text="${category.name}"></span></p>
+</div>
+
+<div>
+  <a th:href="@{/categories/edit/{id}(id=${category.id})}" class="btn btn-warning">✏️ Sửa</a>
+  <a th:href="@{/categories/delete/{id}(id=${category.id})}" class="btn btn-danger"
+     onclick="return confirm('Bạn có chắc muốn xóa danh mục này không?')">🗑️ Xóa</a>
+  <a th:href="@{/categories}" class="btn btn-secondary">⬅ Quay lại</a>
+</div>
+
+</body>
+</html>
