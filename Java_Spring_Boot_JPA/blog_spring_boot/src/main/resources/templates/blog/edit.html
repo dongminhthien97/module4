@@ -2,41 +2,42 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Chỉnh sửa Blog</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <title>Sửa Blog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body class="container mt-4">
+<body class="bg-light">
 
-<h2 class="text-center mb-4">Chỉnh sửa Blog</h2>
+<div class="container mt-5">
+    <h2>Chỉnh sửa Blog</h2>
+    <form th:action="@{/blogs/edit}" th:object="${blog}" method="post">
+        <input type="hidden" th:field="*{id}"/>
 
-<form th:action="@{/blogs/edit}" th:object="${blog}" method="post">
-    <input type="hidden" th:field="*{id}">
+        <div class="mb-3">
+            <label class="form-label">Tiêu đề</label>
+            <input type="text" class="form-control" th:field="*{title}" required>
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Tiêu đề</label>
-        <input type="text" th:field="*{title}" class="form-control" required>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Tác giả</label>
+            <input type="text" class="form-control" th:field="*{author}">
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Tác giả</label>
-        <input type="text" th:field="*{author}" class="form-control" required>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Nội dung</label>
+            <textarea class="form-control" th:field="*{content}" rows="5" required></textarea>
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Nội dung</label>
-        <textarea th:field="*{content}" class="form-control" rows="5" required></textarea>
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Danh mục</label>
+            <select class="form-select" th:field="*{category.id}">
+                <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"
+                        th:selected="${blog.category != null and blog.category.id == cat.id}"></option>
+            </select>
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Danh mục</label>
-        <select th:field="*{category}" class="form-select">
-            <option th:each="c : ${categories}" th:value="${c}" th:text="${c.name}"></option>
-        </select>
-    </div>
-
-    <button class="btn btn-success">Cập nhật</button>
-    <a th:href="@{/blogs}" class="btn btn-secondary">Hủy</a>
-</form>
-
+        <button type="submit" class="btn btn-success">Cập nhật</button>
+        <a href="/blogs" class="btn btn-secondary">Quay lại</a>
+    </form>
+</div>
 </body>
 </html>

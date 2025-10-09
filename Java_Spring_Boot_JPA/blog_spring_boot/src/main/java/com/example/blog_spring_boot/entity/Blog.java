@@ -13,8 +13,11 @@ public class Blog {
 
     private String title;
 
+    private String author;
+
     @Column(columnDefinition = "TEXT")
     private String content;
+
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -23,7 +26,6 @@ public class Blog {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    // ====== Lifecycle Callbacks ======
     @PrePersist
     protected void onCreate() {
         this.createdAt = LocalDateTime.now();
@@ -35,7 +37,6 @@ public class Blog {
         this.updatedAt = LocalDateTime.now();
     }
 
-    // ====== Constructors ======
     public Blog() {}
 
     public Blog(String title, String content, Category category) {
@@ -44,7 +45,14 @@ public class Blog {
         this.category = category;
     }
 
-    // ====== Getters and Setters ======
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public Long getId() { return id; }
 
     public void setId(Long id) { this.id = id; }
@@ -68,4 +76,5 @@ public class Blog {
     public LocalDateTime getUpdatedAt() { return updatedAt; }
 
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+
 }
