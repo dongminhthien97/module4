@@ -3,6 +3,8 @@ package com.example.musicvalidation.service;
 import com.example.musicvalidation.model.Song;
 import com.example.musicvalidation.repository.ISongRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,5 +40,14 @@ public class SongService implements ISongService {
         existing.setGenre(newSong.getGenre());
 
         return songRepository.save(existing);
+    }
+    @Override
+    public Page<Song> search(String keyword, Pageable pageable) {
+        return songRepository.searchByNameOrGenre(keyword, pageable);
+    }
+
+    @Override
+    public Page<Song> findAll(Pageable pageable) {
+        return songRepository.findAll(pageable);
     }
 }

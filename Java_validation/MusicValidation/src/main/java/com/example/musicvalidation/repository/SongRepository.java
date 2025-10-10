@@ -12,7 +12,7 @@ public class SongRepository{
         this.songRepository = songRepository;
     }
     public List<Song> searchByNameOrGenre(String keyword){
-        return songRepository.searchByNameOrGenre(keyword);
+        return songRepository.searchByNameOrGenre(keyword, null).getContent();
     }
     public Song save(Song song){
         return songRepository.save(song);

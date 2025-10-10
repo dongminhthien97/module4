@@ -2,15 +2,20 @@ package com.example.musicvalidation.controller;
 
 import com.example.musicvalidation.model.Song;
 import com.example.musicvalidation.repository.SongRepository;
+import com.example.musicvalidation.service.FileStorageService;
 import com.example.musicvalidation.service.ISongService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -22,16 +27,31 @@ public class SongController {
     @Autowired
     private SongRepository songRepository;
 
+    @Autowired
+    private FileStorageService fileStorageService;
+
     @GetMapping
-    public String listSongs(@RequestParam(value = "keyword", required = false) String keyword, Model model) {
-        List<Song> songs;
+    public String listSongs(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(required = false) String keyword,
+            Model model) {
+
+        Page<Song> songPage;
+
         if (keyword != null && !keyword.trim().isEmpty()) {
-            songs = songRepository.searchByNameOrGenre(keyword);
+            songPage = songService.search(keyword, PageRequest.of(page, size));
             model.addAttribute("keyword", keyword);
         } else {
-            songs = songRepository.findAll();
+            songPage = songService.findAll(PageRequest.of(page, size));
         }
-        model.addAttribute("songs", songs);
+
+        model.addAttribute("songs", songPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", songPage.getTotalPages());
+        model.addAttribute("totalItems", songPage.getTotalElements());
+        model.addAttribute("size", size);
+
         return "list";
     }
 
@@ -43,11 +63,18 @@ public class SongController {
 
     @PostMapping("/save")
     public String saveSong(@Valid @ModelAttribute("song") Song song,
-                           BindingResult result) {
+                           BindingResult result,
+                           @RequestParam("file") MultipartFile file,
+                           RedirectAttributes redirect) throws IOException {
         if (result.hasErrors()) {
             return "create";
         }
+
+        String fileName = fileStorageService.saveFile(file);
+        song.setFilePath(fileName);
+
         songService.save(song);
+        redirect.addFlashAttribute("message", "Upload thành công!");
         return "redirect:/songs";
     }
 
@@ -61,12 +88,18 @@ public class SongController {
     @PostMapping("/update")
     public String updateSong(@Valid @ModelAttribute("song") Song song,
                              BindingResult result,
-                             RedirectAttributes redirect) {
+                             @RequestParam("file") MultipartFile file,
+                             RedirectAttributes redirect) throws IOException {
         if (result.hasErrors()) {
-            return "edit";
+            return "songs/edit";
         }
 
-        songService.update(song.getId(), song);
+        if (!file.isEmpty()) {
+            String fileName = fileStorageService.saveFile(file);
+            song.setFilePath(fileName);
+        }
+
+        songRepository.save(song);
         redirect.addFlashAttribute("message", "Cập nhật bài hát thành công!");
         return "redirect:/songs";
     }
