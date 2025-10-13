@@ -23,13 +23,13 @@ public class BorrowController {
         try {
             String code = borrowService.borrowBook(id);
             model.addAttribute("code", code);
-            return "book/borrow-success";
+            return "borrow/borrow-success";
         } catch (BookNotAvailableException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "book/error";
+            return "error/error";
         } catch (Exception e) {
             model.addAttribute("errorMessage", "Đã xảy ra lỗi trong quá trình mượn sách.");
-            return "book/error";
+            return "error/error";
         }
     }
 
@@ -39,22 +39,22 @@ public class BorrowController {
                                    BindingResult bindingResult,
                                    Model model) {
         if (bindingResult.hasErrors()) {
-            return "book/borrow-form";
+            return "borrow/borrow-form";
         }
         try {
             String code = borrowService.borrowBook(dto.getBookId());
             model.addAttribute("code", code);
-            return "book/borrow-success";
+            return "borrow/borrow-success";
         } catch (BookNotAvailableException e) {
             model.addAttribute("errorMessage", e.getMessage());
-            return "book/error";
+            return "error/error";
         }
     }
 
     @GetMapping("/return")
     public String showReturnForm(Model model) {
         model.addAttribute("borrowReturnDTO", new BorrowReturnDTO());
-        return "book/return"; // return.html
+        return "return/return"; // return.html
     }
 
     @PostMapping("/return")
@@ -64,16 +64,16 @@ public class BorrowController {
             Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "book/return";
+            return "return/return";
         }
 
         try {
             borrowService.returnBook(borrowReturnDTO.getBorrowCode());
             model.addAttribute("message", "✅ Trả sách thành công!");
-            return "book/return-success";
+            return "return/return-success";
         } catch (InvalidBorrowCodeException e) {
             model.addAttribute("error", e.getMessage());
-            return "book/return";
+            return "return/return";
         }
     }
 }
