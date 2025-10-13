@@ -9,7 +9,7 @@
 <body class="container mt-4">
 <h2 class="mb-3">Mượn sách</h2>
 
-<form th:action="@{/borrow}" th:object="${borrowRequestDTO}" method="post">
+<form th:action="@{/templates/book/borrow}" th:object="${borrowRequestDTO}" method="post">
     <div class="mb-3">
         <label for="bookId" class="form-label">ID Sách</label>
         <input type="text" id="bookId" th:field="*{bookId}" class="form-control" placeholder="Nhập mã sách...">

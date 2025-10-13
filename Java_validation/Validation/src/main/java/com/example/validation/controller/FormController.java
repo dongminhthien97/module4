@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 public class FormController {
 
@@ -17,8 +19,15 @@ public class FormController {
     private IUserService userService;
 
     @GetMapping("/")
+    public String listUsers(Model model) {
+        List<User> users = userService.findAll();
+        model.addAttribute("users", users);
+        return "list";
+    }
+
+    @GetMapping("/index")
     public String showForm(Model model) {
-        model.addAttribute("userDTO", new UserDTO()); 
+        model.addAttribute("userDTO", new UserDTO());
         return "index";
     }
 
@@ -27,7 +36,7 @@ public class FormController {
                                BindingResult bindingResult,
                                Model model) {
         if (bindingResult.hasErrors()) {
-            return "index"; 
+            return "index";
         }
 
         User user = new User();

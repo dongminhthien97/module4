@@ -10,7 +10,7 @@
 
 <h3 class="text-center mb-4">🔁 Trả sách</h3>
 
-<form th:action="@{/return}" th:object="${borrowReturnDTO}" method="post" class="card p-4 shadow-sm">
+<form th:action="@{/templates/book/return}" th:object="${borrowReturnDTO}" method="post" class="card p-4 shadow-sm">
     <div class="mb-3">
         <label for="borrowCode" class="form-label">Nhập mã mượn sách:</label>
         <input type="text" id="borrowCode" th:field="*{borrowCode}"
