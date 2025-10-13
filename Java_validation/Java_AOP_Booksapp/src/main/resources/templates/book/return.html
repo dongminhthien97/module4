@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>🔁 Trả sách</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+
+<h3 class="text-center mb-4">🔁 Trả sách</h3>
+
+<form th:action="@{/return}" th:object="${borrowReturnDTO}" method="post" class="card p-4 shadow-sm">
+    <div class="mb-3">
+        <label for="borrowCode" class="form-label">Nhập mã mượn sách:</label>
+        <input type="text" id="borrowCode" th:field="*{borrowCode}"
+               class="form-control" placeholder="VD: 12345">
+        <div th:if="${#fields.hasErrors('borrowCode')}"
+             th:errors="*{borrowCode}" class="text-danger mt-1"></div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a href="/books" class="btn btn-secondary">⬅ Quay lại</a>
+        <button type="submit" class="btn btn-primary">Xác nhận trả</button>
+    </div>
+</form>
+
+</body>
+</html>
