@@ -1,25 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="vi">
 <head>
-    <title>Đăng ký</title>
+    <meta charset="UTF-8">
+    <title>Đăng ký người dùng</title>
 </head>
 <body>
 <h2>Form đăng ký</h2>
-<form th:action="@{/register}" th:object="${user}" method="post">
-    <p>Firstname: <input type="text" th:field="*{firstName}"/></p>
-    <p th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></p>
 
-    <p>Lastname: <input type="text" th:field="*{lastName}"/></p>
-    <p th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+<form th:action="@{/register}" th:object="${userDTO}" method="post">
+    <label>First Name:</label>
+    <input type="text" th:field="*{firstName}"/>
+    <span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span><br>
 
-    <p>Phone: <input type="text" th:field="*{phoneNumber}"/></p>
-    <p th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></p>
+    <label>Last Name:</label>
+    <input type="text" th:field="*{lastName}"/>
+    <span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span><br>
 
-    <p>Age: <input type="number" th:field="*{age}"/></p>
-    <p th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></p>
+    <label>Phone Number:</label>
+    <input type="text" th:field="*{phoneNumber}"/>
+    <span th:if="${#fields.hasErrors('phoneNumber')}" th:errors="*{phoneNumber}"></span><br>
 
-    <p>Email: <input type="text" th:field="*{email}"/></p>
-    <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+    <label>Age:</label>
+    <input type="number" th:field="*{age}"/>
+    <span th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></span><br>
+
+    <label>Email:</label>
+    <input type="text" th:field="*{email}"/>
+    <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span><br>
 
     <button type="submit">Đăng ký</button>
 </form>
