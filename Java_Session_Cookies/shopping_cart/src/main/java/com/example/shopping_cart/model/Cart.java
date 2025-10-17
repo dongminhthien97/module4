@@ -12,7 +12,6 @@ public class Cart {
         this.products = products;
     }
 
-    // getter/setter chuẩn
     public Map<Product, Integer> getProducts() {
         return products;
     }
@@ -21,7 +20,6 @@ public class Cart {
         this.products = products;
     }
 
-    // ✅ Thêm getter alias để tương thích với template cart.items
     public Map<Product, Integer> getItems() {
         return products;
     }

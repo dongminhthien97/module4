@@ -11,14 +11,11 @@
 
     <div class="card shadow-sm">
         <div class="card-body">
-            <!-- Nếu giỏ hàng trống -->
             <div th:if="${#maps.isEmpty(cart.products)}">
                 <div class="alert alert-info">
                     Giỏ hàng đang trống. <a href="/" class="link-primary">Tiếp tục mua sắm</a>
                 </div>
             </div>
-
-            <!-- Nếu có sản phẩm -->
             <div th:if="${!#maps.isEmpty(cart.products)}">
                 <table class="table table-bordered align-middle">
                     <thead class="table-dark text-center">
@@ -31,7 +28,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!-- Duyệt qua entry: key = Product, value = Integer -->
                     <tr th:each="entry : ${cart.products.entrySet()}">
                         <td>
                             <strong th:text="${entry.key.name}">Tên sản phẩm</strong>

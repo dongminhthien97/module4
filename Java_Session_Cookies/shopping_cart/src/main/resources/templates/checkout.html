@@ -10,7 +10,6 @@
     <h2 class="mb-4 text-center">🧾 Thanh toán đơn hàng</h2>
 
     <div class="row">
-        <!-- Thông tin người nhận -->
         <div class="col-md-6">
             <div class="card mb-3 shadow-sm">
                 <div class="card-header bg-dark text-white">Thông tin người nhận</div>
@@ -38,14 +37,11 @@
                 </div>
             </div>
         </div>
-
-        <!-- Tóm tắt đơn hàng -->
         <div class="col-md-6">
             <div class="card shadow-sm">
                 <div class="card-header bg-dark text-white">Tóm tắt đơn hàng</div>
                 <div class="card-body">
                     <ul class="list-group mb-3">
-                        <!-- entry.key = Product, entry.value = số lượng -->
                         <li class="list-group-item" th:each="entry : ${cart.products.entrySet()}">
                             <div class="d-flex justify-content-between">
                                 <div>
