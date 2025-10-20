@@ -1,5 +1,7 @@
 package com.example.blog_spring_boot.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -13,7 +15,9 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<Blog> blogs;
 
     public Long getId() { return id; }

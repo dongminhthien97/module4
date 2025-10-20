@@ -14,4 +14,5 @@ public interface IBlogService {
     Optional<Blog> findById(Long id);
     void save(Blog blog);
     void deleteById(Long id);
+
 }
