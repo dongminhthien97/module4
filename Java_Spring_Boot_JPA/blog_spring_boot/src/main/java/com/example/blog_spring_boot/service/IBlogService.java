@@ -14,5 +14,7 @@ public interface IBlogService {
     Optional<Blog> findById(Long id);
     void save(Blog blog);
     void deleteById(Long id);
-
+    List<Blog> searchByTitle(String keyword);
+    Page<Blog> searchByTitleOrAuthor(String keyword, Pageable pageable);
+    Page<Blog> findByTitleContainingOrContentContaining(String title, String content, Pageable pageable);
 }

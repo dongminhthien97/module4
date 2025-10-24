@@ -42,5 +42,23 @@ public class BlogService implements IBlogService {
     public void deleteById(Long id) {
         blogRepository.deleteById(id);
     }
+    @Override
+    public List<Blog> searchByTitle(String keyword) {
+        if(keyword == null || keyword.trim().isEmpty()) {
+            return blogRepository.findAll();
+        }
+        return blogRepository.findByTitleContainingIgnoreCase(keyword);
+    }
+    @Override
+    public Page<Blog> searchByTitleOrAuthor(String keyword, Pageable pageable) {
+        return blogRepository.findByTitleContainingIgnoreCaseOrAuthorContainingIgnoreCase(keyword, keyword, pageable);
+    }
+
+    @Override
+    public Page<Blog> findByTitleContainingOrContentContaining(String title, String content, Pageable pageable) {
+        return blogRepository.findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(title, content, pageable);
+    }
+
+
 }
 
